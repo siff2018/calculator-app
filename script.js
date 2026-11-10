@@ -1,5 +1,6 @@
 "use strict";
 
+const calculatorPanel = document.querySelector("#calculator-panel");
 const keypad = document.querySelector(".keypad");
 const display = document.querySelector("#result");
 const expression = document.querySelector("#expression");
@@ -88,7 +89,7 @@ keypad.addEventListener("click", (event) => {
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.ctrlKey || event.metaKey || event.altKey || event.defaultPrevented) return;
+  if (calculatorPanel.hidden || event.ctrlKey || event.metaKey || event.altKey || event.defaultPrevented) return;
   if (event.key === "Enter" && event.target instanceof HTMLButtonElement) return;
 
   const key = event.key === "Enter" ? "=" : event.key;
@@ -97,3 +98,72 @@ document.addEventListener("keydown", (event) => {
   event.preventDefault();
   handleKey(key);
 });
+
+const tabs = [...document.querySelectorAll('[role="tab"]')];
+
+function selectTab(selectedTab) {
+  for (const tab of tabs) {
+    const selected = tab === selectedTab;
+    tab.setAttribute("aria-selected", String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    document.getElementById(tab.getAttribute("aria-controls")).hidden = !selected;
+  }
+}
+
+tabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => selectTab(tab));
+  tab.addEventListener("keydown", (event) => {
+    const targets = {
+      ArrowLeft: (index + tabs.length - 1) % tabs.length,
+      ArrowRight: (index + 1) % tabs.length,
+      Home: 0,
+      End: tabs.length - 1
+    };
+    if (!Object.hasOwn(targets, event.key)) return;
+
+    event.preventDefault();
+    const nextTab = tabs[targets[event.key]];
+    selectTab(nextTab);
+    nextTab.focus();
+  });
+});
+
+const category = document.querySelector("#category");
+const amount = document.querySelector("#amount");
+const fromUnit = document.querySelector("#from-unit");
+const toUnit = document.querySelector("#to-unit");
+const conversionResult = document.querySelector("#conversion-result");
+
+function updateConversion() {
+  const value = amount.valueAsNumber;
+  if (!Number.isFinite(value)) {
+    conversionResult.textContent = amount.validity.badInput ? "Enter a valid number" : "—";
+    return;
+  }
+
+  const result = convert(value, category.value, fromUnit.value, toUnit.value);
+  const unit = units[category.value].find(({ id }) => id === toUnit.value);
+  conversionResult.textContent = Number.isFinite(result)
+    ? `${Number(result.toPrecision(12))} ${unit.symbol ?? unit.id}`
+    : "Result out of range";
+}
+
+function updateUnitOptions() {
+  for (const select of [fromUnit, toUnit]) {
+    const options = units[category.value].map((unit) => new Option(unit.label, unit.id));
+    select.replaceChildren(...options);
+  }
+  toUnit.selectedIndex = 1;
+  updateConversion();
+}
+
+category.addEventListener("change", updateUnitOptions);
+amount.addEventListener("input", updateConversion);
+fromUnit.addEventListener("change", updateConversion);
+toUnit.addEventListener("change", updateConversion);
+document.querySelector("#swap-units").addEventListener("click", () => {
+  [fromUnit.value, toUnit.value] = [toUnit.value, fromUnit.value];
+  updateConversion();
+});
+
+updateUnitOptions();

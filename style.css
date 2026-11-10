@@ -85,3 +85,63 @@ button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .operator:hover { background: #4e457f; }
 .equals { background: #b8a6ff; color: #191333; }
 .equals:hover { background: #c9bbff; }
+
+h1 small {
+  color: #b2b8d2;
+  font-size: .75rem;
+  white-space: nowrap;
+}
+
+.tabs,
+.unit-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.tabs { margin-bottom: 16px; }
+
+.tabs button,
+#swap-units {
+  min-height: 44px;
+  padding: 8px;
+  font-size: .9rem;
+}
+
+.tabs button[aria-selected="true"] {
+  background: #b8a6ff;
+  color: #191333;
+}
+
+.converter-fields,
+.converter-fields label {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+}
+
+.converter-fields { gap: 12px; }
+
+.converter-fields input,
+.converter-fields select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid #575b7e;
+  border-radius: 10px;
+  background: #111322;
+  color: inherit;
+  font: inherit;
+}
+
+.converter-fields :focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.conversion-display { margin: 16px 0 0; }
+
+@media (max-width: 360px) {
+  .unit-fields { grid-template-columns: 1fr; }
+}
