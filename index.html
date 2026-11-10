@@ -3,38 +3,72 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A simple calculator with keyboard and touch controls.">
+  <meta name="description" content="A calculator and unit converter with keyboard and touch controls.">
   <title>Calculator</title>
   <link rel="stylesheet" href="style.css">
+  <script src="converter.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
   <main class="calculator" aria-labelledby="title">
-    <h1 id="title">Calculator</h1>
-    <div class="display">
-      <div id="expression" class="expression"></div>
-      <output id="result" aria-label="Calculator display">0</output>
+    <h1 id="title">Calculator <small>Version 1.2</small></h1>
+    <div class="tabs" role="tablist" aria-label="Tools">
+      <button type="button" id="calculator-tab" role="tab" aria-selected="true" aria-controls="calculator-panel">Calculator</button>
+      <button type="button" id="converter-tab" role="tab" aria-selected="false" aria-controls="converter-panel" tabindex="-1">Unit Converter</button>
     </div>
-    <div class="keypad" aria-label="Calculator keypad" role="group">
-      <button type="button" data-key="Escape" class="utility wide" aria-label="Clear all">AC</button>
-      <button type="button" data-key="Backspace" class="utility" aria-label="Delete last digit">⌫</button>
-      <button type="button" data-key="/" class="operator" aria-label="Divide">÷</button>
-      <button type="button" data-key="7">7</button>
-      <button type="button" data-key="8">8</button>
-      <button type="button" data-key="9">9</button>
-      <button type="button" data-key="*" class="operator" aria-label="Multiply">×</button>
-      <button type="button" data-key="4">4</button>
-      <button type="button" data-key="5">5</button>
-      <button type="button" data-key="6">6</button>
-      <button type="button" data-key="-" class="operator" aria-label="Subtract">−</button>
-      <button type="button" data-key="1">1</button>
-      <button type="button" data-key="2">2</button>
-      <button type="button" data-key="3">3</button>
-      <button type="button" data-key="+" class="operator" aria-label="Add">+</button>
-      <button type="button" data-key="0" class="wide">0</button>
-      <button type="button" data-key="." aria-label="Decimal point">.</button>
-      <button type="button" data-key="=" class="equals" aria-label="Equals">=</button>
-    </div>
+    <section id="calculator-panel" role="tabpanel" aria-labelledby="calculator-tab">
+      <div class="display">
+        <div id="expression" class="expression"></div>
+        <output id="result" aria-label="Calculator display">0</output>
+      </div>
+      <div class="keypad" aria-label="Calculator keypad" role="group">
+        <button type="button" data-key="Escape" class="utility wide" aria-label="Clear all">AC</button>
+        <button type="button" data-key="Backspace" class="utility" aria-label="Delete last digit">⌫</button>
+        <button type="button" data-key="/" class="operator" aria-label="Divide">÷</button>
+        <button type="button" data-key="7">7</button>
+        <button type="button" data-key="8">8</button>
+        <button type="button" data-key="9">9</button>
+        <button type="button" data-key="*" class="operator" aria-label="Multiply">×</button>
+        <button type="button" data-key="4">4</button>
+        <button type="button" data-key="5">5</button>
+        <button type="button" data-key="6">6</button>
+        <button type="button" data-key="-" class="operator" aria-label="Subtract">−</button>
+        <button type="button" data-key="1">1</button>
+        <button type="button" data-key="2">2</button>
+        <button type="button" data-key="3">3</button>
+        <button type="button" data-key="+" class="operator" aria-label="Add">+</button>
+        <button type="button" data-key="0" class="wide">0</button>
+        <button type="button" data-key="." aria-label="Decimal point">.</button>
+        <button type="button" data-key="=" class="equals" aria-label="Equals">=</button>
+      </div>
+    </section>
+    <section id="converter-panel" role="tabpanel" aria-labelledby="converter-tab" hidden>
+      <div class="converter-fields">
+        <label for="category">Category
+          <select id="category">
+            <option value="length">Length</option>
+            <option value="weight">Weight</option>
+            <option value="temperature">Temperature</option>
+          </select>
+        </label>
+        <label for="amount">Value
+          <input id="amount" type="number" step="any" placeholder="Enter a number">
+        </label>
+        <div class="unit-fields">
+          <label for="from-unit">From
+            <select id="from-unit"></select>
+          </label>
+          <label for="to-unit">To
+            <select id="to-unit"></select>
+          </label>
+        </div>
+        <button type="button" id="swap-units">Swap units</button>
+      </div>
+      <div class="display conversion-display">
+        <span class="expression">Conversion result</span>
+        <output id="conversion-result" aria-label="Conversion result" for="amount category from-unit to-unit">—</output>
+      </div>
+    </section>
   </main>
 </body>
 </html>
