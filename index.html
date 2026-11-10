@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A simple calculator with keyboard and touch controls.">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="calculator" aria-labelledby="title">
+    <h1 id="title">Calculator</h1>
+    <div class="display">
+      <div id="expression" class="expression"></div>
+      <output id="result" aria-label="Calculator display">0</output>
+    </div>
+    <div class="keypad" aria-label="Calculator keypad" role="group">
+      <button type="button" data-key="Escape" class="utility wide" aria-label="Clear all">AC</button>
+      <button type="button" data-key="Backspace" class="utility" aria-label="Delete last digit">⌫</button>
+      <button type="button" data-key="/" class="operator" aria-label="Divide">÷</button>
+      <button type="button" data-key="7">7</button>
+      <button type="button" data-key="8">8</button>
+      <button type="button" data-key="9">9</button>
+      <button type="button" data-key="*" class="operator" aria-label="Multiply">×</button>
+      <button type="button" data-key="4">4</button>
+      <button type="button" data-key="5">5</button>
+      <button type="button" data-key="6">6</button>
+      <button type="button" data-key="-" class="operator" aria-label="Subtract">−</button>
+      <button type="button" data-key="1">1</button>
+      <button type="button" data-key="2">2</button>
+      <button type="button" data-key="3">3</button>
+      <button type="button" data-key="+" class="operator" aria-label="Add">+</button>
+      <button type="button" data-key="0" class="wide">0</button>
+      <button type="button" data-key="." aria-label="Decimal point">.</button>
+      <button type="button" data-key="=" class="equals" aria-label="Equals">=</button>
+    </div>
+  </main>
+</body>
+</html>
